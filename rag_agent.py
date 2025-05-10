@@ -67,13 +67,15 @@ class RAGAgent:
 
     def initialize_vectorstore(self):
         """Initialize vector store with caching mechanism"""
-        cache_file = os.path.join(self.cache_dir, "vectorstore.pkl")
+        persist_directory = os.path.join(self.cache_dir, "chroma_db")
         
-        # Check if cache exists
-        if os.path.exists(cache_file):
-            print("Loading cached vector store...")
-            with open(cache_file, 'rb') as f:
-                self.vectorstore = pickle.load(f)
+        # Check if vector store exists
+        if os.path.exists(persist_directory):
+            print("Loading existing vector store...")
+            self.vectorstore = Chroma(
+                persist_directory=persist_directory,
+                embedding_function=self.embeddings
+            )
             return
             
         print("Initializing new vector store...")
@@ -120,13 +122,12 @@ class RAGAgent:
         self.vectorstore = Chroma.from_documents(
             documents=texts,
             embedding=self.embeddings,
-            persist_directory=os.path.join(self.cache_dir, "chroma_db")
+            persist_directory=persist_directory
         )
         
-        # Save cache
-        print("Saving vector store cache...")
-        with open(cache_file, 'wb') as f:
-            pickle.dump(self.vectorstore, f)
+        # Persist the vector store
+        print("Persisting vector store...")
+        self.vectorstore.persist()
 
     def retrieve_relevant_docs(self, query: str, k: int = 5) -> Dict[str, List[str]]:
         """Retrieve relevant documents using MMR algorithm for diverse retrieval"""
