@@ -1,50 +1,82 @@
 # AutoGen RAG Agent
 
-这是一个基于 AutoGen 框架构建的 RAG (Retrieval-Augmented Generation) agent 实现。
+This is a RAG (Retrieval-Augmented Generation) agent implementation built on the AutoGen framework.
 
-## 功能特点
+## Features
 
-- 使用 LangChain 进行文档处理和向量存储
-- 使用 Chroma 作为向量数据库
-- 使用 AutoGen 框架实现多 agent 协作
-- 支持文档检索和智能问答
+- Document processing and vector storage using LangChain
+- Chroma as the vector database for efficient similarity search
+- Multi-agent collaboration using the AutoGen framework
+- Document retrieval and intelligent Q&A capabilities
+- Support for various document formats and sizes
+- Configurable retrieval parameters for optimal performance
 
-## 安装
+## Installation
 
-1. 克隆仓库
-2. 安装依赖：
+1. Clone the repository:
+```bash
+git clone <repository-url>
+cd agent_rag
+```
+
+2. Install dependencies:
 ```bash
 pip install -r requirements.txt
 ```
 
-## 配置
+## Configuration
 
-1. 创建 `.env` 文件并添加你的 OpenAI API 密钥：
+1. Create a `.env` file in the root directory and add your OpenAI API key:
 ```
 OPENAI_API_KEY=your_api_key_here
 ```
 
-2. 在 `documents` 目录中放入你的文档（支持 .txt 格式）
+2. Place your documents in the `documents` directory (supports .txt format)
 
-## 使用方法
+## Usage
 
-1. 确保你的文档已经放在 `documents` 目录中
-2. 运行示例：
+1. Ensure your documents are placed in the `documents` directory
+2. Run the example:
 ```bash
 python rag_agent.py
 ```
 
-## 自定义
+## Customization
 
-你可以通过修改以下参数来自定义 RAG agent 的行为：
+You can customize the RAG agent's behavior by modifying the following parameters:
 
-- `chunk_size`：文档分块大小
-- `chunk_overlap`：文档分块重叠大小
-- `k`：检索的文档数量
-- 模型配置（在 `config_list` 中）
+- `chunk_size`: Size of document chunks for processing (default: 1000)
+- `chunk_overlap`: Overlap between document chunks (default: 200)
+- `k`: Number of documents to retrieve (default: 4)
+- Model configuration in `config_list`:
+  - Model selection
+  - Temperature
+  - Max tokens
+  - Other model-specific parameters
 
-## 注意事项
+## Project Structure
 
-- 确保你有足够的 OpenAI API 额度
-- 文档最好是纯文本格式
-- 建议文档大小适中，过大的文档可能会影响检索效果 
+```
+agent_rag/
+├── documents/          # Directory for input documents
+├── rag_agent.py       # Main implementation file
+├── process_data.py   # Data preprocess module
+├── requirements.txt   # Project dependencies
+└── .env              # Environment variables
+```
+
+## Best Practices
+
+- Ensure you have sufficient OpenAI API credits
+- Use plain text format for documents
+- Keep document sizes moderate for optimal retrieval
+- Consider document structure and formatting
+- Monitor API usage and costs
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details. 
